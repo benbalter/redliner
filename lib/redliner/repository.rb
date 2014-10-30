@@ -2,9 +2,10 @@ module Redliner
   class Repository
     attr_accessor :nwo
 
-    def initialize(nwo, app)
+    def initialize(nwo, app, ref = nil)
       @nwo = nwo
       @app = app
+      @ref = ref
     end
 
     def owner
@@ -19,8 +20,9 @@ module Redliner
       meta['private']
     end
 
-    def head_sha
-      @app.client.ref(nwo, "heads/#{default_branch}").object.sha
+    def base_sha
+      ref = @ref || default_branch
+      @app.client.ref(nwo, "heads/#{ref}").object.sha
     end
 
     # Cached response from repository API

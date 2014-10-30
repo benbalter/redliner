@@ -95,13 +95,13 @@ module Redliner
       document = Document.find_by_uuid(params[:uuid], self)
 
       # create a new branch
-      client.create_ref document.repo.nwo, "heads/#{document.repo.patch_branch}", document.repo.head_sha
+      client.create_ref document.repo.nwo, "heads/#{document.repo.patch_branch}", document.repo.base_sha
 
       # push our changes to the new branch
       client.update_contents document.repo.nwo, document.path, "TEST", document.sha, params[:content], { :branch => document.repo.patch_branch }
 
       # Submit the pull request
-      pull_request = client.create_pull_request document.repo.nwo, document.repo.default_branch, document.repo.patch_branch, pull_request_title, pull_request_body
+      pull_request = client.create_pull_request document.repo.nwo, document.ref, document.repo.patch_branch, pull_request_title, pull_request_body
 
       if pull_request
         render_template :success, { :pull_request => pull_request }

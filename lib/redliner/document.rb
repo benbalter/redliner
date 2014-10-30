@@ -8,7 +8,7 @@ module Redliner
     def initialize(options)
       @path = options[:path]
       @ref = options[:ref]
-      @repo = Repository.new "#{options[:owner]}/#{options[:repo]}", options[:app]
+      @repo = Repository.new "#{options[:owner]}/#{options[:repo]}", options[:app], options[:ref]
       @app = options[:app]
     end
 
