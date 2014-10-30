@@ -29,3 +29,11 @@
     </div>
   </div>
 </form>
+<script>
+var editor = CodeMirror.fromTextArea(document.getElementById("content"), {
+    mode: 'markdown',
+    lineNumbers: true,
+    theme: "default",
+    extraKeys: {"Enter": "newlineAndIndentContinueMarkdownList"}
+  });
+</script>
