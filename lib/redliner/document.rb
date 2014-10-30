@@ -16,6 +16,7 @@ module Redliner
       @uuid ||= SecureRandom.uuid
     end
 
+    # Save to Redis backend
     def save!
       @app.redis.set uuid, to_h.to_json
     end

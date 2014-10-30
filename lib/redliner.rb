@@ -112,6 +112,7 @@ module Redliner
 
     get "/:owner/:repo/:view/:ref/*" do
       authenticate!
+
       doc = Document.new( {
         :path => params[:splat].first.to_s,
         :repo => params[:repo],
@@ -120,6 +121,7 @@ module Redliner
         :app => self
       })
 
+      # only repo collaborators can generate new hashes
       halt 401 unless client.collaborator?(doc.repo.nwo, user.login)
 
       doc.save!
@@ -131,12 +133,17 @@ module Redliner
         params[:content] = cached_content
         uncache_content
         submit_redlines!
-      else
+      else # standard form
         document = Document.find_by_uuid(params[:uuid], self)
         render_template :form, { :document => document }
       end
     end
 
+    # If the POST request is a GitHub-auth'd request
+    # We must cache the changes to the user's session
+    # After the Oauth handshake, they'll come back as a GET
+    # If there is cached changes, we'll assume it's a post Oauth GET
+    # Which should really be a POST, and submit the PR anyways
     post "/document/:uuid" do
       if params[:type] == "github"
         cache_content

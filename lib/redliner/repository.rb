@@ -15,14 +15,15 @@ module Redliner
       nwo.split("/").last
     end
 
-    def public?
-      false
+    def private?
+      meta['private']
     end
 
     def head_sha
       @app.client.ref(nwo, "heads/#{default_branch}").object.sha
     end
 
+    # Cached response from repository API
     def meta
       @meta ||= @app.client.repo(nwo)
     end
@@ -31,10 +32,13 @@ module Redliner
       @deault_branch ||= meta["default_branch"]
     end
 
+    # Returns array of Octokit branch objects
     def branches
       @branches ||= @app.client.branches(nwo)
     end
 
+    # Name of branch to submit pull request from
+    # Starts with patch-0 and keeps going until it finds one not taken
     def patch_branch
       @patch_branch ||= begin
         num = 0
