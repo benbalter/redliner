@@ -30,4 +30,4 @@ This app is a simple Sinatra app. It's designed to run on Heroku, but can run an
 
 ## Project status
 
-Still in development. Not for production use. 
+Still in development. [There's a lot to be done](https://github.com/benbalter/redliner/issues). Not for production use.
