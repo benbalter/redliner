@@ -70,8 +70,8 @@ module Redliner
       halt erb template, :layout => :layout, :locals => locals.merge({ :template => template })
     end
 
-    def cache_content(content)
-      session[:content] = content
+    def cache_content
+      session[:content] = params[:content]
     end
 
     def cached_content
@@ -83,12 +83,31 @@ module Redliner
     end
 
     def pull_request_title
-      name = params[:type] == "guest" ? params[:name] : user.login
+      name = params[:type] == "guest" ? params[:name] : "@#{user.login}"
       "Redline submission from #{name}"
     end
 
     def pull_request_body
       "COPY HERE"
+    end
+
+    def submit_redlines!
+      document = Document.find_by_uuid(params[:uuid], self)
+
+      # create a new branch
+      client.create_ref document.repo.nwo, "heads/#{document.repo.patch_branch}", document.repo.head_sha
+
+      # push our changes to the new branch
+      client.update_contents document.repo.nwo, document.path, "TEST", document.sha, params[:content], { :branch => document.repo.patch_branch }
+
+      # Submit the pull request
+      pull_request = client.create_pull_request document.repo.nwo, document.repo.default_branch, document.repo.patch_branch, pull_request_title, pull_request_body
+
+      if pull_request
+        render_template :success, { :pull_request => pull_request }
+      else
+        render_template :error
+      end
     end
 
     get "/:owner/:repo/:view/:ref/*" do
@@ -108,26 +127,22 @@ module Redliner
     end
 
     get "/document/:uuid" do
-      document = Document.find_by_uuid(params[:uuid], self)
-      render_template :form, { :document => document }
+      if user && cached_content #post oauth redirect back to GET route
+        params[:content] = cached_content
+        uncache_content
+        submit_redlines!
+      else
+        document = Document.find_by_uuid(params[:uuid], self)
+        render_template :form, { :document => document }
+      end
     end
 
     post "/document/:uuid" do
-      document = Document.find_by_uuid(params[:uuid], self)
-
-      # create a new branch
-      client.create_ref document.repo.nwo, "heads/#{document.repo.patch_branch}", document.repo.head_sha
-
-      # push our changes to the new branch
-      client.update_contents document.repo.nwo, document.path, "TEST", document.sha, params[:content], { :branch => document.repo.patch_branch }
-
-      # Submit the pull request
-      pr = client.create_pull_request document.repo.nwo, document.repo.default_branch, document.repo.patch_branch, pull_request_title, pull_request_body
-
-      if pr
-        render_template :success, { :pull_request => pr }
-      else
-        render_template :error
+      if params[:type] == "github"
+        cache_content
+        authenticate!
+      elsif params[:type] == "guest"
+        submit_redlines!
       end
     end
   end
