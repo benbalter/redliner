@@ -1,0 +1,13 @@
+{
+  "name": "redliner",
+  "version": "0.0.1",
+  "authors": [
+    "Ben Balter <ben.balter@github.com>"
+  ],
+  "main": "config.ru",
+  "license": "MIT",
+  "homepage": "https://github.com/benbalter/redliner",
+  "dependencies": {
+    "bootstrap": "~3.3.0"
+  }
+}
