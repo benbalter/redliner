@@ -92,6 +92,7 @@ module Redliner
     end
 
     get "/:owner/:repo/:view/:ref/*" do
+      authenticate!
       doc = Document.new( {
         :path => params[:splat].first.to_s,
         :repo => params[:repo],
@@ -99,6 +100,9 @@ module Redliner
         :ref => params[:ref],
         :app => self
       })
+
+      halt 401 unless client.collaborator?(doc.repo.nwo, user.login)
+
       doc.save!
       redirect to("/document/#{doc.uuid}"), 301
     end

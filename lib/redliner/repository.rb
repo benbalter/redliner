@@ -23,8 +23,12 @@ module Redliner
       @app.client.ref(nwo, "heads/#{default_branch}").object.sha
     end
 
+    def meta
+      @meta ||= @app.client.repo(nwo)
+    end
+
     def default_branch
-      @deault_branch ||= @app.client.repo(nwo)["default_branch"]
+      @deault_branch ||= meta["default_branch"]
     end
 
     def branches
