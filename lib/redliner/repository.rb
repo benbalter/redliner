@@ -57,7 +57,7 @@ module Redliner
         :owner => owner,
         :name => name,
         :nwo => nwo,
-        :public => public?
+        :private => private?
       }
     end
   end
