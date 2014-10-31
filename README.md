@@ -2,6 +2,8 @@
 
 A tool for facilitating the redlining of documents with the GitHub uninitiated.
 
+![screenshot](https://cloud.githubusercontent.com/assets/282759/4864720/931fdd14-611e-11e4-9d17-927cc5b20704.png)
+
 ## How it works
 
 1. You send the non-Github-user a unique, hashed URL
