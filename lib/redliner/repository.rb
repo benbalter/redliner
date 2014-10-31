@@ -21,17 +21,12 @@ module Redliner
     end
 
     def base_sha
-      ref = @ref || default_branch
-      @app.client.ref(nwo, "heads/#{ref}").object.sha
+      @app.client.ref(nwo, "heads/#{@ref}").object.sha
     end
 
     # Cached response from repository API
     def meta
       @meta ||= @app.client.repo(nwo)
-    end
-
-    def default_branch
-      @deault_branch ||= meta["default_branch"]
     end
 
     # Returns array of Octokit branch objects
@@ -40,11 +35,13 @@ module Redliner
     end
 
     # Name of branch to submit pull request from
-    # Starts with patch-0 and keeps going until it finds one not taken
+    # Starts with patch-1 and keeps going until it finds one not taken
     def patch_branch
       @patch_branch ||= begin
-        num = 0
-        while branches.any? { |b| b.name == "patch-#{num}" } do
+        num = 1
+        branch = "patch-#{num}"
+        puts branches.inspect
+        while branches.any? { |b| b.name == branch } do
           num = num + 1
           branch = "patch-#{num}"
         end
