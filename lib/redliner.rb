@@ -110,11 +110,8 @@ Submitted on behalf of #{user_name} from #{request.ip} using #{request.user_agen
       # Submit the pull request
       pull_request = client.create_pull_request document.repo.nwo, document.ref, document.repo.patch_branch, pull_request_title, pull_request_body
 
-      if pull_request
-        render_template :success, { :pull_request => pull_request }
-      else
-        render_template :error
-      end
+      Raise "Could not create pull request" unless pull_request
+      render_template :success, { :pull_request => pull_request }
     end
 
     get "/:owner/:repo/:view/:ref/*" do
