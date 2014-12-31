@@ -47,8 +47,33 @@ Still in development. [There's a lot to be done](https://github.com/benbalter/re
 
 ## Contributing
 
+### Flow
+
+
 1. Take a look at [the open issues](https:https://github.com/benbalter/redliner/issues).
-2. Fork the project
+2. Fork the repository
 3. Create a descriptively named feature branch
 4. Tackle an open issue
 5. Submit a pull request
+
+### Working Locally
+
+Install your fork of Redliner locally:
+
+```
+git clone git@github.com:your-name/redliner.git
+cd redliner
+bundle install
+touch .env
+git checkout -b descriptive-branch-name
+```
+Set your local variables for `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, and `GITHUB_TOKEN` in `.env`. You'll probably want to create a separate Github application for this, as you'll need to set `localhost:5000` as the callback URL.
+
+Then, start up a local Redis server (you may need to install Redis):
+```
+redis-server --port 16379
+```
+Start the app:
+```
+foreman start
+```
