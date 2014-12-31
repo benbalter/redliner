@@ -8,6 +8,11 @@
     <div class="col-md-12">
       <textarea id="content" name="content"><%= document.contents %></textarea>
     </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <input type="text" id="commit" name="commit" class="form-control" value="<%= %>" placeholder="Enter a brief description of your edit" />
+      </div>
+    </div>
   </div>
   <div class="row">
     <div class="col-sm-4 guest">
@@ -33,6 +38,8 @@
 var editor = CodeMirror.fromTextArea(document.getElementById("content"), {
     mode: 'gfm',
     lineNumbers: true,
+    lineWrapping: true,
+    autofocus: true,
     theme: "default",
     extraKeys: {"Enter": "newlineAndIndentContinueMarkdownList"}
   });
