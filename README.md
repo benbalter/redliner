@@ -31,7 +31,7 @@ First, you'll need to create a [developer application](https://github.com/settin
 * `GITHUB_CLIENT_ID`
 * `GITHUB_CLIENT_SECRET`
 
-Next, you'll want to create a bot account with a [personal access token](https://github.com/settings/applications) scoped to the relevant repositories. It will need both read *and write* access. Once done, simply set the personal access token as:
+Next, you'll want to create a bot account with a [personal access token](https://github.com/settings/applications) scoped to the relevant repositories. Select `public_repo` to give it permission to read and write from repositories that it can access (and/or `repo` if it'll be working with private repos). Using your main account, make sure that the bot has both read *and write* access to each repository it will access. Once done, simply set the personal access token as:
 
 * `GITHUB_TOKEN`
 
