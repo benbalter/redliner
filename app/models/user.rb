@@ -18,7 +18,12 @@ class User < ActiveRecord::Base
   end
 
   def self.from_omniauth(omniauth)
-    User.find_or_create_by(login: omniauth.info.nickname)
+    user = User.find_or_create_by(login: omniauth.info.nickname)
+    user.name  = omniauth.info.name
+    user.email = omniauth.info.email
+    user.admin = User.count == 1 # Make the first user an Admin
+    user.save!
+    user
   end
 
   def self.new_with_session(params, session)
