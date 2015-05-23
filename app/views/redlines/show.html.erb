@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Key:</strong>
+  <%= @redline.key %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @redline.user_id %>
+</p>
+
+<p>
+  <strong>Document:</strong>
+  <%= @redline.document_id %>
+</p>
+
+<%= link_to 'Edit', edit_redline_path(@redline) %> |
+<%= link_to 'Back', redlines_path %>

@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Redlines</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>User</th>
+      <th>Document</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @redlines.each do |redline| %>
+      <tr>
+        <td><%= redline.key %></td>
+        <td><%= redline.user_id %></td>
+        <td><%= redline.document_id %></td>
+        <td><%= link_to 'Show', redline %></td>
+        <td><%= link_to 'Edit', edit_redline_path(redline) %></td>
+        <td><%= link_to 'Destroy', redline, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Redline', new_redline_path %>

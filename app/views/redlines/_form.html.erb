@@ -1,0 +1,29 @@
+<%= form_for(@redline) do |f| %>
+  <% if @redline.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@redline.errors.count, "error") %> prohibited this redline from being saved:</h2>
+
+      <ul>
+      <% @redline.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :key %><br>
+    <%= f.text_field :key %>
+  </div>
+  <div class="field">
+    <%= f.label :user_id %><br>
+    <%= f.number_field :user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :document_id %><br>
+    <%= f.number_field :document_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
