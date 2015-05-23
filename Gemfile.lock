@@ -66,16 +66,23 @@ GEM
       responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    dotenv (2.0.1)
+    dotenv-rails (2.0.1)
+      dotenv (= 2.0.1)
     email_validator (1.6.0)
       activemodel
     erubis (2.7.0)
     execjs (2.5.2)
+    faraday (0.9.1)
+      multipart-post (>= 1.2, < 3)
     font-awesome-rails (4.3.0.0)
       railties (>= 3.2, < 5.0)
     globalid (0.3.5)
       activesupport (>= 4.1.0)
     haml (4.0.6)
       tilt
+    hashie (2.0.5)
+    httpauth (0.2.0)
     i18n (0.7.0)
     jbuilder (2.2.16)
       activesupport (>= 3.0.0, < 5)
@@ -87,6 +94,8 @@ GEM
     jquery-ui-rails (5.0.5)
       railties (>= 3.2.16)
     json (1.8.2)
+    jwt (0.1.8)
+      multi_json (>= 1.5)
     kaminari (0.16.3)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -100,9 +109,25 @@ GEM
     mini_portile (0.6.2)
     minitest (5.6.1)
     multi_json (1.11.0)
+    multipart-post (2.0.0)
     nested_form (0.3.2)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
+    oauth2 (0.8.1)
+      faraday (~> 0.8)
+      httpauth (~> 0.1)
+      jwt (~> 0.1.4)
+      multi_json (~> 1.0)
+      rack (~> 1.2)
+    omniauth (1.1.4)
+      hashie (>= 1.2, < 3)
+      rack
+    omniauth-github (1.1.1)
+      omniauth (~> 1.0)
+      omniauth-oauth2 (~> 1.1)
+    omniauth-oauth2 (1.1.1)
+      oauth2 (~> 0.8.0)
+      omniauth (~> 1.0)
     orm_adapter (0.5.0)
     pry (0.10.1)
       coderay (~> 1.1.0)
@@ -206,9 +231,12 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.1.0)
   devise
+  dotenv-rails
   email_validator
   jbuilder (~> 2.0)
   jquery-rails
+  omniauth
+  omniauth-github
   pry-rails
   rails (= 4.2.1)
   rails_admin

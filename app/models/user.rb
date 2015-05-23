@@ -1,8 +1,5 @@
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+  devise :rememberable, :trackable, :omniauthable
 
   validates :name, :email, presence: true, unless: Proc.new { |u| u.login.present? }
   validates :login, presence: true, unless: Proc.new { |u| u.name.present? }
@@ -10,11 +7,26 @@ class User < ActiveRecord::Base
 
   has_many :redlines
 
+  scope :admin,  -> { where(admin: true) }
+
   def promote!
     update admin: true
   end
 
   def demote!
     update admin: false
+  end
+
+  def self.from_omniauth(omniauth)
+    User.find_or_create_by(login: omniauth.info.nickname)
+  end
+
+  def self.new_with_session(params, session)
+    super.tap do |user|
+      if data = session["devise.github_data"] && session["devise.github_data"]["extra"]["raw_info"]
+        user.login = data["login"] if user.login.blank?
+        user.email = data["email"] if user.email.blank?
+      end
+    end
   end
 end

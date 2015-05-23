@@ -14,10 +14,13 @@ gem 'bootstrap-sass'
 gem 'email_validator'
 gem 'rails_admin'
 gem 'devise'
+gem 'omniauth'
+gem 'omniauth-github'
 
 group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'pry-rails'
+  gem 'dotenv-rails'
 end
