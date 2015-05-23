@@ -11,13 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150523150242) do
+ActiveRecord::Schema.define(version: 20150523190200) do
 
   create_table "documents", force: :cascade do |t|
     t.integer  "repository_id"
     t.string   "path"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "ref"
   end
 
   add_index "documents", ["repository_id"], name: "index_documents_on_repository_id"

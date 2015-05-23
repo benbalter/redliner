@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   validates :email, email: true, unless: Proc.new { |u| u.login.present? }
 
   has_many :redlines
+  attr_accessor :token
 
   scope :admin,  -> { where(admin: true) }
 

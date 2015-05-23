@@ -16,6 +16,7 @@ gem 'rails_admin'
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-github'
+gem 'octokit'
 
 group :development, :test do
   gem 'byebug'
