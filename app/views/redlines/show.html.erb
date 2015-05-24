@@ -1,26 +1,24 @@
 <p id="notice"><%= notice %></p>
 
-
 <%= bootstrap_form_tag({url: redline_path, method: "put"}) do |f| %>
 
-
-<div class="editable" id="editor">
-</div>
-
 <%= f.text_area :contents, value: @redline.document.contents, class: "hidden" %>
-
-<%= f.text_field :commit_msg %>
+<div class="editable" id="editor"></div>
 
 Editing as <%= @redline.user.name %>
 
-  <% if user_signed_in? %>
-    (@<%= @redline.user.login %>)
-  <% else %>
-    <button class="btn">Log in with GitHub</button>
-  <% end %>
-
-<%= f.submit %>
-
+<% if @redline.user.login? %>
+  (@<%= @redline.user.login %>)
+<% else %>
+  <button class="btn">Log in with GitHub</button>
 <% end %>
 
-<%= @redline.document.client.pullable?.inspect %>
+<div class="row">
+  <div class="col-md-10">
+    <%= f.text_field :commit_msg, label: false, placeholder: "Describe your changes (optional)" %>
+  </div>
+  <div class="col-md-2">
+    <%= f.submit %>
+  </div>
+</div>
+<% end %>
