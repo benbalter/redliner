@@ -1,0 +1,33 @@
+{
+    "name": "components/jquery-htmlclean",
+    "description": "HTML Clean plug-in for jQuery",
+    "type": "component",
+    "homepage": "https://code.google.com/p/jquery-clean/",
+    "license": "BSD-2-Clause",
+    "support": {
+        "issues": "https://code.google.com/p/jquery-clean/issues/list",
+        "source": "https://code.google.com/p/jquery-clean/source/checkout"
+    },
+    "authors": [
+        {
+            "name": "Anthony Johnston",
+            "homepage": "http://www.antix.co.uk"
+        }
+    ],
+    "require": {
+        "components/jquery": "*"
+    },
+    "extra": {
+        "component": {
+            "scripts": [
+                "jquery.htmlClean.js"
+            ],
+            "shim": {
+                "deps": [
+                    "jquery"
+                ],
+                "exports": "jQuery.htmlClean"
+            }
+        }
+    }
+}

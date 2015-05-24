@@ -3,7 +3,11 @@
 
 <%= bootstrap_form_tag({url: redline_path, method: "put"}) do |f| %>
 
-<%= f.text_area :contents, value: @redline.document.contents %>
+
+<div class="editable" id="editor">
+</div>
+
+<%= f.text_area :contents, value: @redline.document.contents, class: "hidden" %>
 
 <%= f.text_field :commit_msg %>
 

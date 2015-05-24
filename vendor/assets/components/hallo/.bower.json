@@ -1,0 +1,29 @@
+{
+  "name": "hallo",
+  "version": "1.1.1",
+  "main": "./dist/hallo.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "dependencies": {
+    "jquery": "1.9.x",
+    "jquery-ui": "1.10.x",
+    "jquery-htmlclean": "1.3.x",
+    "rangy-official": "1.3.x",
+    "font-awesome": "~4.2.0"
+  },
+  "homepage": "https://github.com/bergie/hallo",
+  "_release": "1.1.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.1.1",
+    "commit": "fa144fb844517c1f54e54a93ab9f28fa07f5eedc"
+  },
+  "_source": "git://github.com/bergie/hallo.git",
+  "_target": "~1.1.1",
+  "_originalSource": "hallo",
+  "_direct": true
+}

@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     redirect '/'
   end
 
+  get "/redlines/", to: 'redlines#index'
   get "/redlines/:key", to: 'redlines#show', as: "redline"
   put "/redlines/:key", to: 'redlines#update'
 

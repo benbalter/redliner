@@ -1,5 +1,6 @@
 class RedlinesController < ApplicationController
   before_action :set_redline, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate, only: [:index, :edit, :new, :create]
 
   # GET /redlines
   # GET /redlines.json
@@ -17,10 +18,6 @@ class RedlinesController < ApplicationController
   # GET /redlines/new
   def new
     @redline = Redline.new
-  end
-
-  # GET /redlines/1/edit
-  def edit
   end
 
   # POST /redlines
@@ -52,16 +49,6 @@ class RedlinesController < ApplicationController
     redirect_to redline_path, notice: msg
   end
 
-  # DELETE /redlines/1
-  # DELETE /redlines/1.json
-  def destroy
-    @redline.destroy
-    respond_to do |format|
-      format.html { redirect_to redlines_url, notice: 'Redline was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_redline
@@ -74,5 +61,9 @@ class RedlinesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def redline_params
       params.require(:redline).permit(:key)
+    end
+
+    def authenticate
+      redirect_to auth_failure_path, status: 401 unless current_user && current_user.admin?
     end
 end

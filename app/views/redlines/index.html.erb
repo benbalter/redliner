@@ -19,13 +19,9 @@
         <td><%= redline.user_id %></td>
         <td><%= redline.document_id %></td>
         <td><%= link_to 'Show', redline %></td>
-        <td><%= link_to 'Edit', edit_redline_path(redline) %></td>
-        <td><%= link_to 'Destroy', redline, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Redline', new_redline_path %>

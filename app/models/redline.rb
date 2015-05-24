@@ -7,6 +7,9 @@ class Redline < ActiveRecord::Base
 
   include Callable
 
+  extend FriendlyId
+  friendly_id :key
+
   def repository
     document.repository
   end

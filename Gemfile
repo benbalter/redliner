@@ -18,6 +18,7 @@ gem 'omniauth'
 gem 'omniauth-github'
 gem 'octokit'
 gem 'bootstrap_form'
+gem 'friendly_id'
 
 group :development, :test do
   gem 'byebug'

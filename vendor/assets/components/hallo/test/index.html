@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Hallo Editor browser tests</title>
+
+    <!-- Dependencies -->
+    <script src="../bower_components/jquery/jquery.js"></script>
+    <script src="../bower_components/jquery-ui/ui/jquery-ui.js"></script>
+    <script src="../bower_components/rangy-official/rangy-core.js"></script>
+    <script src="../dist/hallo.js"></script>
+
+    <!-- Test framework -->
+    <link rel="stylesheet" href="./qunit/qunit.css" type="text/css" />
+    <script type="text/javascript" src="./qunit/qunit.js"></script>
+    <script>
+      var log = [];
+      var testName;
+
+      QUnit.done(function (test_results) {
+        var tests = [];
+        for(var i = 0, len = log.length; i < len; i++) {
+          var details = log[i];
+          tests.push({
+            name: details.name,
+            result: details.result,
+            expected: details.expected,
+            actual: details.actual,
+            source: details.source
+          });
+        }
+        test_results.tests = tests;
+
+        window.global_test_results = test_results;
+      });
+      QUnit.testStart(function(testDetails){
+        QUnit.log(function(details){
+          if (!details.result) {
+            details.name = testDetails.name;
+            log.push(details);
+          }
+        });
+      });
+    </script>
+
+    <!-- CoffeeScript support -->
+    <script type="text/javascript" src="./qunit/coffee-script.js"></script>
+
+    <!-- load test scripts -->
+    <script type="text/coffeescript" src="./hallo.coffee"></script>
+  </head>
+  <body>
+    <h1 id="qunit-header">Unit tests for Hallo Editor</h1>
+    <h2 id="qunit-banner"></h2>
+    <div id="qunit-testrunner-toolbar"></div>
+    <h2 id="qunit-userAgent"></h2>
+    <ol id="qunit-tests"></ol>
+    <div id="qunit-fixture">
+      <div class="hallo-instance">
+        <p class="editable"></p>
+      </div>
+      <div class="hallo-activated">
+        <p class="editable"></p>
+      </div>
+      <div class="hallo-modified">
+        <p class="editable"></p>
+      </div>
+      <div class="hallo-toolbar">
+        <p class="editable"></p>
+      </div>
+    </div>
+  </body>
+</html>
