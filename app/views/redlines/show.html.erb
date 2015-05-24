@@ -1,19 +1,22 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Key:</strong>
-  <%= @redline.key %>
-</p>
 
-<p>
-  <strong>User:</strong>
-  <%= @redline.user_id %>
-</p>
+<%= bootstrap_form_tag({url: redline_path, method: "put"}) do |f| %>
 
-<p>
-  <strong>Document:</strong>
-  <%= @redline.document_id %>
-</p>
+<%= f.text_area :contents, value: @redline.document.contents %>
 
-<%= link_to 'Edit', edit_redline_path(@redline) %> |
-<%= link_to 'Back', redlines_path %>
+<%= f.text_field :commit_msg %>
+
+Editing as <%= @redline.user.name %>
+
+  <% if user_signed_in? %>
+    (@<%= @redline.user.login %>)
+  <% else %>
+    <button class="btn">Log in with GitHub</button>
+  <% end %>
+
+<%= f.submit %>
+
+<% end %>
+
+<%= @redline.document.client.pullable?.inspect %>

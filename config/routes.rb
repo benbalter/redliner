@@ -14,6 +14,9 @@ Rails.application.routes.draw do
     redirect '/'
   end
 
+  get "/redlines/:key", to: 'redlines#show', as: "redline"
+  put "/redlines/:key", to: 'redlines#update'
+
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
 end

@@ -10,6 +10,8 @@ class RedlinesController < ApplicationController
   # GET /redlines/1
   # GET /redlines/1.json
   def show
+    authenticate_user! if @redline.user.login
+    sign_in @redline.user
   end
 
   # GET /redlines/new
@@ -37,18 +39,17 @@ class RedlinesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /redlines/1
-  # PATCH/PUT /redlines/1.json
   def update
-    respond_to do |format|
-      if @redline.update(redline_params)
-        format.html { redirect_to @redline, notice: 'Redline was successfully updated.' }
-        format.json { render :show, status: :ok, location: @redline }
-      else
-        format.html { render :edit }
-        format.json { render json: @redline.errors, status: :unprocessable_entity }
-      end
+    id = @redline.submit!({
+      :contents   => params[:contents],
+      :commit_msg => params[:commit_msg]
+    })
+    if @redline.client.pullable?
+      msg = "Redlines were successfully submitted as <a href=\"#{@redline.repository.url}/issues/#{id}\">#{@redline.repository.nwo}##{id}</a>."
+    else
+      msg = 'Redlines were successfully submitted.'
     end
+    redirect_to redline_path, notice: msg
   end
 
   # DELETE /redlines/1
@@ -64,11 +65,14 @@ class RedlinesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_redline
-      @redline = Redline.find(params[:id])
+      @redline = Redline.find_by(key: params[:key])
+      client = Client.new :token => session[:token], :repo => @redline.document.repository
+      @redline.client = client
+      @redline.document.client = client
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def redline_params
-      params.require(:redline).permit(:key, :user_id, :document_id)
+      params.require(:redline).permit(:key)
     end
 end

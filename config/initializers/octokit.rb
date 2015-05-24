@@ -5,3 +5,4 @@ stack = Faraday::RackBuilder.new do |builder|
 end
 
 Octokit.middleware = stack if Rails.env.development?
+Octokit.auto_paginate = true

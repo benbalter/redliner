@@ -17,6 +17,7 @@ gem 'devise'
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'octokit'
+gem 'bootstrap_form'
 
 group :development, :test do
   gem 'byebug'

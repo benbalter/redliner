@@ -3,10 +3,12 @@ class Document < ActiveRecord::Base
   has_many   :redlines
 
   validates :repository_id, :path, :ref, presence: true
-  validate :valid_ref
+  validate  :valid_ref
+
+  include Callable
 
   def blob
-    @blob ||= Redliner.client.contents(repository.nwo, :path => path, :ref => ref)
+    @blob ||= client.pullable.contents(repository.nwo, :path => path, :ref => ref)
   end
 
   def sha
@@ -14,11 +16,11 @@ class Document < ActiveRecord::Base
   end
 
   def base_sha
-    @base_sha ||= Redliner.client.ref(repository.nwo, "heads/#{ref}").object.sha
+    @base_sha ||= client.pullable.ref(repository.nwo, "heads/#{ref}").object.sha
   end
 
   def contents
-    @contents ||= Base64.decode64(blob.content).force_encoding("utf-8") if blob
+    Base64.decode64(blob.content).force_encoding("utf-8") if blob
   end
 
   private
